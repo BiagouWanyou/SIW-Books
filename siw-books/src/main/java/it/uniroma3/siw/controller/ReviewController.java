@@ -48,6 +48,7 @@ public class ReviewController {
 			User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 			user.addRecensione(userReview);
 			Book book = this.bookService.getBook(idL);
+			book.removeReview(this.reviewService.getOldReview(user, book));
 			book.addReview(userReview);
 			this.bookService.saveBook(book);
 			userReview.setUser(user);
@@ -64,7 +65,8 @@ public class ReviewController {
 		Book book = this.bookService.getBook(idL);
 		Review review= this.reviewService.getReview(idR);
 		review.getUser().removeReview(review);
-		book.removeReview(this.reviewService.getReview(idR));
+		book.removeReview(review);
+		this.bookService.saveBook(book);
 		this.reviewService.deleteReview(idR);
 		
 		return "redirect:/libri/"+idL;

@@ -51,6 +51,10 @@ public class ReviewService {
 	public Long countReviews() {
 		return Long.valueOf(this.reviewRepository.count());
 	}
+	@Transactional
+	public Review getOldReview(User user, Book book) {
+		return this.reviewRepository.findByUserAndLibro(user, book).orElse(null);
+	}
 
 	
 }
