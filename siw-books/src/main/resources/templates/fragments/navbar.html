@@ -1,0 +1,57 @@
+<nav th:fragment="navbar" class="navbar navbar-expand-lg" id="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-book-open me-2"></i>SiwBooks
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/libri">
+                            <i class="fas fa-book me-1"></i>Esplora Libri
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/autori">
+                            <i class="fas fa-user-edit me-1"></i>Scopri Autori
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item" th:if="${userDetails == null}">
+                        <a class="nav-link" href="/login">
+                            <i class="fas fa-sign-in-alt me-1"></i>Accedi
+                        </a>
+                    </li>
+                    <li class="nav-item" th:if="${userDetails == null}">
+                        <a class="nav-link" href="/register">
+                            <i class="fas fa-user-plus me-1"></i>Unisciti
+                        </a>
+                    </li>
+					<li class="nav-item" th:if="${userDetails != null}">
+					     <a class="nav-link" href="/logout">
+					       <i class="fas fa-sign-out-alt"></i> Log-out
+					     </a>
+					 </li>
+					
+                  <!--  <li class="nav-item dropdown" th:if="${userDetails!= null}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i>
+                            <span th:text="${session.user.nome}">Utente</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/profilo"><i class="fas fa-user me-2"></i>Profilo</a></li>
+                            <li><a class="dropdown-item" href="/mie-recensioni"><i class="fas fa-star me-2"></i>Mie Recensioni</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>

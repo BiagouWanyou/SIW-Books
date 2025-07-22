@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiwBooks - Registrazione</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homeStyle.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/formStyle.css}" /> 
+    </head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="floating-books">
+        <i class="fas fa-book floating-book" style="left: 10%; animation-delay: 0s;"></i>
+        <i class="fas fa-book-open floating-book" style="left: 20%; animation-delay: 3s;"></i>
+        <i class="fas fa-bookmark floating-book" style="left: 30%; animation-delay: 6s;"></i>
+        <i class="fas fa-feather-alt floating-book" style="left: 40%; animation-delay: 9s;"></i>
+        <i class="fas fa-scroll floating-book" style="left: 50%; animation-delay: 12s;"></i>
+        <i class="fas fa-book floating-book" style="left: 60%; animation-delay: 2s;"></i>
+        <i class="fas fa-book-open floating-book" style="left: 70%; animation-delay: 5s;"></i>
+        <i class="fas fa-bookmark floating-book" style="left: 80%; animation-delay: 8s;"></i>
+        <i class="fas fa-feather-alt floating-book" style="left: 90%; animation-delay: 11s;"></i>
+    </div>
+
+    <section class="app-form-section"> <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                    <div class="app-card-container"> <div class="app-card-header"> <h1><i class="fas fa-user-plus me-3"></i>Registrati</h1>
+                            <p>Unisciti alla nostra community di lettori appassionati</p>
+                        </div>
+                        
+                        <div class="app-form-content"> 
+							<form th:action="@{/register}" method="post">
+                                
+                                <div class="form-grouping"> <h3><i class="fas fa-user"></i> Informazioni Personali</h3>
+                                    
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="user.name"
+													   th:classappend="${#fields.hasErrors('user.name')} ? ' is-invalid' : ''"
+                                                       th:field="*{user.name}" placeholder="Nome" required>
+                                                <label for="user.name">Nome</label>
+                                                <div class="error-message" th:if="${#fields.hasErrors('user.name')}" th:errors="*{user.name}"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="user.surname" 
+													   th:classappend="${#fields.hasErrors('user.surname')} ? ' is-invalid' : ''"
+                                                       th:field="*{user.surname}" placeholder="Cognome" required>
+                                                <label for="user.surname">Cognome</label>
+                                                <div class="error-message" th:if="${#fields.hasErrors('user.surname')}" th:errors="*{user.surname}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="user.email" 
+											   th:classappend="${#fields.hasErrors('user.email')} ? ' is-invalid' : ''"
+                                               th:field="*{user.email}" placeholder="Email" required>
+                                        <label for="user.email">Email</label>
+                                        <div class="error-message" th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-grouping"> <h3><i class="fas fa-key"></i> Credenziali di Accesso</h3>
+                                    
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="credentials.username"
+											   th:classappend="${#fields.hasErrors('credentials.username')} ? ' is-invalid' : ''"
+                                               th:field="*{credentials.username}" placeholder="Username" required>
+                                        <label for="credentials.username">Username</label>
+                                        <div class="error-message" th:if="${#fields.hasErrors('credentials.username')}" th:errors="*{credentials.username}"></div>
+                                    </div>
+                                    
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="credentials.password" 
+										       th:classappend="${#fields.hasErrors('credentials.password')} ? ' is-invalid' : ''"
+                                               th:field="*{credentials.password}" placeholder="Password" required>
+                                        <label for="credentials.password">Password</label>
+                                        <div class="password-strength">
+                                            <div class="password-strength-bar"></div>
+                                        </div>
+                                        <div class="error-message" th:if="${#fields.hasErrors('credentials.password')}" th:errors="*{credentials.password}"></div>
+                                    </div>
+                                    
+                                   <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <button type="submit" class="btn btn-primary-gradient"> <i class="fas fa-user-plus me-2"></i>Registrati
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <a href="/login" class="btn btn-outline-primary-gradient"> <i class="fas fa-sign-in-alt me-2"></i>Hai già un account?
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script th:src="@{/js/passowrdBar.js}"></script>
+</body>
+</html>

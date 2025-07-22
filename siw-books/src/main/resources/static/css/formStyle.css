@@ -1,0 +1,275 @@
+/* You can put this in a separate file like src/main/resources/static/css/form-styles.css */
+
+/* --- Form Specific Styles --- */
+
+.app-form-section { /* Renamed from .registration-section */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+}
+
+.app-card-container { /* Renamed from .registration-container */
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    position: relative; /* Keep this for z-index */
+    z-index: 2; /* Keep this for z-index */
+}
+
+.app-card-header { /* Renamed from .registration-header */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.app-card-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.app-card-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+.app-form-content { /* Renamed from .registration-form */
+    padding: 2.5rem;
+}
+
+.form-grouping { /* Renamed from .form-section */
+    margin-bottom: 2.5rem;
+}
+
+.form-grouping h3 {
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-grouping h3::before {
+    content: '';
+    width: 4px;
+    height: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+}
+
+.form-floating {
+    margin-bottom: 1.5rem;
+}
+.dropdown {
+    width: 100%;
+}
+
+/* Styles for the dropdown button */
+.custom-dropdown {
+    width: 100%; /* Ensures the button is full width */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; /* Ensures text is readable */
+}
+
+/* Crucial fix: Ensures the dropdown menu is also full width */
+
+.dropdown-menu {
+    width: 100%;
+    /* Set a maximum height to enable scrolling */
+    max-height: 300px; /* You can adjust this value as needed */
+    /* Add vertical scrollbar when content overflows */
+    overflow-y: auto;
+    /* Hide horizontal scrollbar to keep it clean */
+    overflow-x: hidden;
+}
+.dropdown-menu:has(input[type="checkbox"]) label.dropdown-item {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Aligns text to left, checkmark to right */
+    position: relative; /* Needed for positioning the checkmark */
+    width: 100%;
+}
+
+/* Hide the actual checkbox input */
+.dropdown-menu input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Styles for the custom checkmark icon */
+.custom-checkmark {
+    font-size: 1.1rem;
+    color: #667eea;
+    visibility: hidden; /* Start invisible */
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Show the checkmark when the checkbox is checked */
+.dropdown-menu input[type="checkbox"]:checked ~ .custom-checkmark {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Add a visual cue to the entire row when selected */
+.dropdown-menu input[type="checkbox"]:checked + .custom-checkmark ~ .genre-text {
+    font-weight: bold;
+    color: #495057;
+}
+
+/* Optional: Add a light background on hover for better UX */
+.dropdown-menu label.dropdown-item:hover {
+    background-color: #e9ecef;
+}
+.form-floating .form-control {
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    padding: 1rem 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-floating .form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.15);
+}
+
+.form-floating label {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.form-select {
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    padding: 1rem 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.15);
+}
+
+.btn-primary-gradient { /* Renamed from .btn-registration */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-primary-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    color: white;
+}
+
+.btn-outline-primary-gradient { /* Renamed from .btn-secondary-registration */
+    background: transparent;
+    border: 2px solid #667eea;
+    color: #667eea;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-outline-primary-gradient:hover {
+    background: #667eea;
+    color: white;
+}
+
+.row.form-row {
+    margin-bottom: 0;
+}
+
+.col-md-6 {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+}
+
+.password-strength {
+    height: 4px;
+    background: #e0e6ed;
+    border-radius: 2px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.password-strength-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff4757, #ffa502, #2ed573);
+    transition: width 0.3s ease;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+    }
+}
+
+/* The .app-card-container already has z-index: 2, making this redundant but safe to keep */
+/* .registration-container {
+    position: relative;
+    z-index: 2;
+} */
+
+/* Additional classes for larger card */
+       .app-card-large {
+           max-width: none;
+           margin: 0 auto;
+       }
+       
+       .app-form-content-expanded {
+           padding: 3rem;
+       }
+       
+       .form-grouping-spaced {
+           margin-bottom: 3rem;
+       }
+       
+       .form-row-expanded {
+           margin-top: 2rem;
+       }
+       
+       .form-select-large {
+           min-height: 140px;
+       }
+       
+       .sinossi-expanded {
+           min-height: 140px;
+           resize: vertical;
+       }

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiwBooks - Dove le storie prendono vita</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/homeStyle.css}" />
+	<link rel="stylesheet" th:href="@{/css/navbar.css}" />
+	<link rel="stylesheet" th:href="@{/css/footer.css}" />
+
+</head>
+<body>
+    
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+    <section class="hero-section">
+        <div class="floating-books">
+            <i class="fas fa-book floating-book" style="left: 10%; animation-delay: 0s;"></i>
+            <i class="fas fa-book-open floating-book" style="left: 20%; animation-delay: 3s;"></i>
+            <i class="fas fa-bookmark floating-book" style="left: 30%; animation-delay: 6s;"></i>
+            <i class="fas fa-feather-alt floating-book" style="left: 40%; animation-delay: 9s;"></i>
+            <i class="fas fa-scroll floating-book" style="left: 50%; animation-delay: 12s;"></i>
+            <i class="fas fa-book floating-book" style="left: 60%; animation-delay: 2s;"></i>
+            <i class="fas fa-book-open floating-book" style="left: 70%; animation-delay: 5s;"></i>
+            <i class="fas fa-bookmark floating-book" style="left: 80%; animation-delay: 8s;"></i>
+            <i class="fas fa-feather-alt floating-book" style="left: 90%; animation-delay: 11s;"></i>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Dove le storie<br>prendono vita</h1>
+            <p class="hero-subtitle">Immergiti in un universo di libri straordinari e scopri autori che trasformeranno la tua visione del mondo</p>
+            
+            <div class="hero-cta">
+				<a class="btn-hero btn-hero-primary" sec:authorize="hasRole('ADMIN')" 
+								   th:href="@{admin/registra-autore}"><i class="fa-solid fa-plus">
+									
+								   </i>Aggiungi un autori
+								</a>
+                <a href="/libri" class="btn-hero btn-hero-primary">
+                    <i class="fas fa-rocket me-2"></i>Inizia l'Avventura
+                </a>
+				<a class="btn-hero btn-hero-primary" sec:authorize="hasRole('ADMIN')" 
+												   th:href="@{admin/registra-libro}">
+												   <i class="fa-solid fa-plus"></i> Aggiungi un libro
+												</a>
+                <a href="/autori" class="btn-hero btn-hero-secondary">
+                    <i class="fas fa-compass me-2"></i>Scopri Autori
+                </a>
+				
+            
+				
+            </div>
+			
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-container">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item fade-in">
+                            <div class="stat-number" th:text="${totalLibri ?: '1,247'}">1,247</div>
+                            <div class="stat-label">Libri Disponibili</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item fade-in">
+                            <div class="stat-number" th:text="${totalAutori ?: '423'}">423</div>
+                            <div class="stat-label">Autori Celebrati</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item fade-in">
+                            <div class="stat-number" th:text="${totalRecensioni ?: '8,967'}">8,967</div>
+                            <div class="stat-label">Recensioni Condivise</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item fade-in">
+                            <div class="stat-number" th:text="${totalUtenti ?: '2,156'}">2,156</div>
+                            <div class="stat-label">Lettori Appassionati</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="book-showcase">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Scoperte Letterarie</h2>
+                <p class="section-subtitle">Lasciati conquistare dalle ultime gemme aggiunte alla nostra collezione</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4" th:each="libro : ${books}">
+                    <div class="book-card fade-in">
+                        <div class="book-image-container">
+                            <img th:if="${libro.copertina != null }"
+                                 th:src="@{'/image/' + ${libro.copertina.id}}" 
+                                 th:alt="${libro.titolo}" 
+                                 class="book-image">
+                            <div th:unless="${libro.copertina != null }"
+                                 class="book-image-placeholder">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="book-badge">Nuovo</div>
+                        </div>
+                        
+                        <div class="book-content">
+                            <h3 class="book-title" th:text="${libro.titolo}">Il Mistero della Biblioteca Perduta</h3>
+                            <p class="book-author">
+                                <i class="fas fa-user-edit me-1"></i>
+                                <span th:each="autore, iterStat : ${libro.autori}">
+                                    <span th:text="${autore.nome + ' ' + autore.cognome}">Marco Rossi</span>
+                                    <span th:if="${!iterStat.last}">, </span>
+                                </span>
+                            </p>
+                            
+                            <div class="book-meta">
+                                <div class="book-year" th:text="${libro.dataPubblicazione}">2024</div>
+                                <div class="book-rating" th:if="${libro.mediaVoti != null}">
+                                    <span class="rating-stars">
+                                        <i th:each="i : ${#numbers.sequence(1, 5)}"
+                                           th:class="${i <= libro.mediaVoti ? 'fas fa-star' : 'far fa-star'}"></i>
+                                    </span>
+                                    <span class="rating-text" th:text="${#numbers.formatDecimal(libro.mediaVoti, 1, 1)}">4.5</span>
+                                </div>
+                                <div class="book-rating" th:unless="${libro.mediaVoti != null}">
+                                    <span class="rating-stars">
+                                        <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                                    </span>
+                                    <span class="rating-text">N/D</span>
+                                </div>
+                            </div>
+                            
+                            <div class="book-actions">
+                                <a th:href="@{'/libri/' + ${libro.id}}" class="btn-book btn-book-primary">
+                                    <i class="fas fa-eye me-2"></i>Dettagli
+                                </a>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5 fade-in">
+                <a href="/libri" class="btn btn-lg btn-hero-primary btn-custom">
+                    <i class="fas fa-book-reader me-2"></i>Vedi Tutti i Libri
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="authors-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Autori in Evidenza</h2>
+                <p class="section-subtitle">Scopri le menti brillanti dietro le tue storie preferite</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4" th:each="autore : ${autori}">
+                    <div class="author-card fade-in">
+                        <div class="author-photo-container">
+                            <img th:if="${autore.immagine != null }"
+                                 th:src="@{'/image/'+${autore.immagine.id}}" 
+                                 th:alt="${autore.nome + ' ' + autore.cognome}"
+                                 class="author-photo">
+                            <div th:unless="${autore.immagine != null }"
+                                 class="author-photo-placeholder">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="author-content-wrapper">
+                            <h4 class="author-name" th:text="${autore.nome + ' ' + autore.cognome}">Jane Austen</h4>
+							<th:block th:if="${autore.nazionalita != null}">
+							    <p class="author-nationality" th:text="'Nazionalita: ' + ${autore.nazionalita.nome}">Britannica</p>
+							</th:block>
+							<th:block th:unless="${autore.nazionalita != null}">
+							    <p class="author-nationality">Nazionalità: N/D</p> </th:block>
+                            <a th:href="@{'/autori/' + ${autore.id}}" class="btn-item btn-item-primary mt-auto">
+                                <i class="fas fa-info-circle me-2"></i>Dettagli
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5 fade-in">
+                <a href="/autori" class="btn btn-lg btn-hero-primary btn-custom">
+                    <i class="fas fa-users me-2"></i>Vedi Tutti gli Autori
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container cta-content fade-in">
+            <h2 class="cta-title">Non perdere le ultime novità!</h2>
+            <p class="cta-text">Unisciti alla nostra community per ricevere aggiornamenti, consigli personalizzati e offerte esclusive.</p>
+            <a href="/register" class="btn-hero btn-hero-secondary">
+                <i class="fas fa-user-plus me-2"></i>Registrati Ora
+            </a>
+        </div>
+    </section>
+
+    
+	<div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+<script th:src="@{/js/home.js}"></script>
+</body>
+</html>

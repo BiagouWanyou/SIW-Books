@@ -1,0 +1,665 @@
+:root {
+           --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+           --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+           --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+           --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+           --text-primary: #2c3e50;
+           --text-secondary: #7f8c8d;
+           --glass-bg: rgba(255, 255, 255, 0.1);
+           --glass-border: rgba(255, 255, 255, 0.2);
+       }
+
+       * {
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
+
+       body {
+           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+           color: var(--text-primary);
+           overflow-x: hidden;
+       }
+	   /* Hero Section with Immersive Design */
+	           .hero-section {
+	               height: 100vh;
+	               background: var(--primary-gradient);
+	               position: relative;
+	               display: flex;
+	               align-items: center;
+	               justify-content: center;
+	               overflow: hidden;
+	           }
+
+	           .hero-section::before {
+	               content: '';
+	               position: absolute;
+	               top: 0;
+	               left: 0;
+	               right: 0;
+	               bottom: 0;
+	               background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+	               animation: float 20s ease-in-out infinite;
+	           }
+
+	           .hero-content {
+	               text-align: center;
+	               color: white;
+	               z-index: 2;
+	               position: relative;
+	               max-width: 800px;
+	               padding: 0 2rem;
+	           }
+
+	           .hero-title {
+	               font-size: clamp(3rem, 8vw, 6rem);
+	               font-weight: 900;
+	               margin-bottom: 1.5rem;
+	               text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	               animation: slideInUp 1s ease-out;
+	           }
+
+	           .hero-subtitle {
+	               font-size: clamp(1.2rem, 3vw, 1.8rem);
+	               margin-bottom: 3rem;
+	               opacity: 0.9;
+	               font-weight: 300;
+	               animation: slideInUp 1s ease-out 0.2s both;
+	           }
+
+	           .hero-cta {
+	               display: flex;
+	               gap: 1rem;
+	               justify-content: center;
+	               flex-wrap: wrap;
+	               animation: slideInUp 1s ease-out 0.4s both;
+	           }
+			   .hero-grid-cta{			   
+			       display: grid; 
+				   width: 500px;
+			       grid-template-columns: 1fr 1fr;
+				   column-gap: 1rem;
+			       row-gap: 1rem;
+			       justify-items: center; 
+			       justify-content: center;
+			       align-content: center;
+			   }
+
+	           .btn-hero {
+	               padding: 1rem 2rem;
+	               font-size: 1.1rem;
+	               font-weight: 600;
+	               border: none;
+	               border-radius: 50px;
+	               transition: all 0.3s ease;
+	               text-decoration: none;
+	               position: relative;
+	               overflow: hidden;
+	           }
+
+	           .btn-hero-primary {
+	               background: rgba(255, 255, 255, 0.2);
+	               color: white;
+	               backdrop-filter: blur(10px);
+	               border: 2px solid rgba(255, 255, 255, 0.3);
+	           }
+
+	           .btn-hero-primary:hover {
+	               background: rgba(255, 255, 255, 0.3);
+	               transform: translateY(-3px);
+	               box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+	               color: white;
+	           }
+
+	           .btn-hero-secondary {
+	               background: transparent;
+	               color: white;
+	               border: 2px solid rgba(255, 255, 255, 0.5);
+	           }
+
+	           .btn-hero-secondary:hover {
+	               background: white;
+	               color: var(--text-primary);
+	               transform: translateY(-3px);
+	           }
+
+	           /* Floating Books Animation */
+	           .floating-books {
+	               position: absolute;
+	               top: 0;
+	               left: 0;
+	               width: 100%;
+	               height: 100%;
+	               overflow: hidden;
+	               z-index: 1;
+	           }
+
+	           .floating-book {
+	               position: absolute;
+	               color: rgba(255, 255, 255, 0.1);
+	               font-size: 3rem;
+	               animation: floatBook 15s linear infinite;
+	           }
+
+	           /* Dynamic Stats Section */
+	           .stats-section {
+	               background: white;
+	               padding: 5rem 0;
+	               position: relative;
+	               margin-top: -100px;
+	               z-index: 3;
+	           }
+
+	           .stats-container {
+	               background: white;
+	               border-radius: 30px;
+	               padding: 4rem 2rem;
+	               box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+	               margin: 0 2rem;
+	               position: relative;
+	               overflow: hidden;
+	           }
+
+	           .stats-container::before {
+	               content: '';
+	               position: absolute;
+	               top: 0;
+	               left: 0;
+	               right: 0;
+	               height: 5px;
+	               background: var(--primary-gradient);
+	           }
+
+	           .stat-item {
+	               text-align: center;
+	               padding: 1rem;
+	           }
+
+	           .stat-number {
+	               font-size: 3rem;
+	               font-weight: 900;
+	               background: var(--primary-gradient);
+	               -webkit-background-clip: text;
+	               -webkit-text-fill-color: transparent;
+	               background-clip: text;
+	               display: block;
+	               margin-bottom: 0.5rem;
+	           }
+				
+	           .stat-label {
+	               font-size: 1.1rem;
+	               color: var(--text-secondary);
+	               font-weight: 500;
+	           }
+
+	           /* Modern Book Cards */
+	           .book-showcase {
+	               padding: 6rem 0;
+	               background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+	           }
+
+	           .section-header {
+	               text-align: center;
+	               margin-bottom: 4rem;
+	           }
+
+	           .section-title {
+	               font-size: 3rem;
+	               font-weight: 800;
+	               background: var(--primary-gradient);
+	               -webkit-background-clip: text;
+	               -webkit-text-fill-color: transparent;
+	               background-clip: text;
+	               margin-bottom: 1rem;
+	           }
+
+	           .section-subtitle {
+	               font-size: 1.2rem;
+	               color: var(--text-secondary);
+	               max-width: 600px;
+	               margin: 0 auto;
+	           }
+
+	           .book-card {
+	               background: white;
+	               border-radius: 25px;
+	               overflow: hidden;
+	               box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+	               transition: all 0.5s ease;
+	               position: relative;
+	               height: 100%;
+	           }
+
+	           .book-card:hover {
+	               transform: translateY(-10px) scale(1.02);
+	               box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+	           }
+
+	           .book-card::before {
+	               content: '';
+	               position: absolute;
+	               top: 0;
+	               left: 0;
+	               right: 0;
+	               height: 4px;
+	               background: var(--primary-gradient);
+	               transform: scaleX(0);
+	               transition: transform 0.5s ease;
+	           }
+
+	           .book-card:hover::before {
+	               transform: scaleX(1);
+	           }
+
+	           .book-image-container {
+	               position: relative;
+	               height: 300px;
+	               overflow: hidden;
+	           }
+
+	           .book-image {
+	               width: 100%;
+	               height: 100%;
+	               object-fit: cover;
+	               transition: all 0.5s ease;
+	           }
+
+	           .book-card:hover .book-image {
+	               transform: scale(1.1);
+	           }
+
+	           .book-image-placeholder {
+	               width: 100%;
+	               height: 100%;
+	               background: var(--primary-gradient);
+	               display: flex;
+	               align-items: center;
+	               justify-content: center;
+	               color: white;
+	               font-size: 4rem;
+	           }
+
+	           .book-badge {
+	               position: absolute;
+	               top: 1rem;
+	               right: 1rem;
+	               background: var(--secondary-gradient);
+	               color: white;
+	               padding: 0.5rem 1rem;
+	               border-radius: 20px;
+	               font-size: 0.8rem;
+	               font-weight: 600;
+	               backdrop-filter: blur(10px);
+	           }
+
+	           .book-content {
+	               padding: 2rem;
+	           }
+
+	           .book-title {
+	               font-size: 1.4rem;
+	               font-weight: 700;
+	               margin-bottom: 0.5rem;
+	               color: var(--text-primary);
+	               display: -webkit-box;
+	               -webkit-line-clamp: 2;
+	               -webkit-box-orient: vertical;
+	               overflow: hidden;
+	           }
+
+	           .book-author {
+	               color: var(--text-secondary);
+	               font-weight: 500;
+	               margin-bottom: 1rem;
+	               font-size: 1rem;
+	           }
+
+	           .book-meta {
+	               display: flex;
+	               align-items: center;
+	               gap: 1rem;
+	               margin-bottom: 1.5rem;
+	           }
+
+	           .book-year {
+	               background: rgba(103, 126, 234, 0.1);
+	               color: #667eea;
+	               padding: 0.3rem 0.8rem;
+	               border-radius: 15px;
+	               font-size: 0.9rem;
+	               font-weight: 500;
+	           }
+			   .author-year {
+			   	               background: rgba(103, 126, 234, 0.1);
+			   	               color: #667eea;
+			   	               padding: 0.1rem 0.8rem;
+			   	               border-radius: 15px;
+			   	               font-size: 0.9rem;
+			   	               font-weight: 500;
+			   	           }
+			   .book-author { /* This seems like a duplicate from .book-meta .book-author, check your CSS structure */
+			   	               background: rgba(103, 126, 234, 0.1);
+			   	               color: #667eea;
+			   	               padding: 0.3rem 0.8rem;
+			   	               border-radius: 15px;
+			   	               font-size: 0.9rem;
+			   	               font-weight: 500;
+			   	           }
+
+	           .book-rating {
+	               display: flex;
+	               align-items: center;
+	               gap: 0.5rem;
+	           }
+
+	           .rating-stars {
+	               color: #ffc107;
+	               font-size: 1.1rem;
+	           }
+
+	           .rating-text {
+	               color: var(--text-secondary);
+	               font-size: 0.9rem;
+	           }
+
+	           .book-actions {
+	               display: flex;
+	               gap: 1rem;
+	           }
+
+	           .btn-book {
+	               padding: 0.8rem 1.5rem;
+	               border-radius: 25px;
+	               font-weight: 600;
+	               text-decoration: none;
+	               transition: all 0.3s ease;
+	               flex: 1;
+	               text-align: center;
+	           }
+
+	           .btn-book-primary {
+	               background: var(--primary-gradient);
+	               color: white;
+	               border: none;
+	           }
+			   .btn-custom {
+					background: var(--primary-gradient);
+				    color: white;
+				    border: none;
+				
+			   }
+			   .btn-custom:hover{
+					transform: translateY(-2px);
+					background: var(--primary-gradient);
+			   	 	box-shadow: 0 10px 25px rgba(103, 126, 234, 0.3);
+			   	    color: white;
+				}
+
+	           .btn-book-primary:hover {
+	               transform: translateY(-2px);
+	               box-shadow: 0 10px 25px rgba(103, 126, 234, 0.3);
+	               color: white;
+	           }
+
+	           .btn-book-secondary {
+	               background: transparent;
+	               color: var(--text-primary);
+	               border: 2px solid rgba(103, 126, 234, 0.3);
+	           }
+
+	           .btn-book-secondary:hover {
+	               background: rgba(103, 126, 234, 0.1);
+	               color: var(--text-primary);
+	           }
+
+	           /* Authors Section */
+	           .authors-section {
+	               padding: 6rem 0;
+	               background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); /* Changed background to match book-showcase */
+	           }
+
+	           .author-card {
+	               background: white; /* Card background is white */
+	               border-radius: 25px;
+	               /* Removed padding here, it will be applied to .author-content-wrapper */
+	               /* padding: 3rem 2rem; */
+	               text-align: center;
+	               box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+	               transition: all 0.5s ease;
+	               position: relative;
+	               overflow: hidden; /* Crucial for clipping the image by the card's border-radius */
+	               height: 100%;
+	               display: flex; /* Enable flexbox for vertical stacking */
+	               flex-direction: column;
+	           }
+
+	           .author-card::before {
+	               content: '';
+	               position: absolute;
+	               top: 0;
+	               left: 0;
+	               right: 0;
+	               height: 4px; /* Added a top border like book-card */
+	               background: var(--primary-gradient);
+	               transform: scaleX(0);
+	               transition: transform 0.5s ease;
+	               z-index: 1; /* Ensure it's above the image */
+	           }
+
+	           .author-card:hover::before {
+	               transform: scaleX(1);
+	           }
+
+	           .author-card:hover {
+	               transform: translateY(-10px);
+	               box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+	           }
+
+	           /* MODIFIED: author-photo-container now behaves like book-image-container */
+	           .author-photo-container {
+	               position: relative;
+	               width: 100%;   /* Occupy full width of the author-card */
+	               height: 250px; /* Fixed height for the image section, adjust as needed */
+	               overflow: hidden;
+	               /* Removed border-radius: 50%; */
+	               /* Removed border: 5px solid white; */
+	               /* Removed box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); */
+	           }
+
+	           .author-photo {
+	               width: 100%;
+	               height: 100%;
+	               object-fit: cover;
+	               transition: all 0.5s ease;
+	           }
+
+	           .author-card:hover .author-photo {
+	               transform: scale(1.1);
+	           }
+
+	           .author-photo-placeholder {
+	               width: 100%;
+	               height: 100%;
+	               background: var(--primary-gradient);
+	               /* Removed border-radius: 50%; */
+	               display: flex;
+	               align-items: center;
+	               justify-content: center;
+	               color: white;
+	               font-size: 4rem; /* Larger icon for placeholder */
+	               /* Removed border: 5px solid white; */
+	               /* Removed box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); */
+	           }
+
+	           /* NEW: Wrapper for the content below the image */
+	           .author-content-wrapper {
+	               padding: 3rem 2rem; /* Re-apply the original padding here */
+	               flex-grow: 1; /* Allows this content area to take available space */
+	               display: flex;
+	               flex-direction: column;
+	               justify-content: space-between; /* To push the button to the bottom */
+	           }
+
+	           .author-name {
+	               font-size: 1.5rem;
+	               font-weight: 700;
+	               margin-bottom: 0.5rem;
+	               color: var(--text-primary);
+	           }
+
+	           .author-nationality {
+	               color: var(--text-secondary);
+	               font-weight: 500;
+	               margin-bottom: 2rem; /* Keep existing margin */
+	           }
+			   .btn-item {
+			   	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			   	    border: none;
+			   	    border-radius: 12px;
+			   	    padding: 0.5rem 1rem;
+			   	    color: white;
+			   	    font-weight: 600;
+			   	    text-decoration: none;
+			   	    transition: all 0.3s ease;
+			   	    display: block; 
+			   	    width: 150px;   
+			   	    margin: 0 auto; 
+			   	    text-align: center; 
+			   		
+			   	    line-height: 1.2; 
+
+			   	    /* Original internal flex properties for icon/text alignment, if you still want them */
+			   	    /* If display:block, these might be redundant unless you have complex internal layout */
+			   	    /* display: flex;  <-- Remove this if you use display: block and margin:auto */
+			   	    align-items: center; /* Still good for vertical alignment of content */
+			   	    justify-content: center; /* Still good for horizontal alignment of content */
+			   	    gap: 0.3rem; /* Still good for gap between icon and text */
+
+			   	    margin-top: auto; /* Keep this if you want it pushed to the bottom by parent flexbox */
+			         }
+			         
+			         .btn-item:hover {
+			             transform: translateY(-2px);
+			             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+			             color: white;
+			         }
+			         
+			         .btn-item-primary {
+			             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			         }
+
+	           /* CTA Section */
+	           .cta-section {
+	               padding: 6rem 0;
+	               background: var(--dark-gradient);
+	               color: white;
+	               text-align: center;
+	               position: relative;
+	               overflow: hidden;
+	           }
+
+	           .cta-section::before {
+	               content: '';
+	               position: absolute;
+	               top: 0;
+	               left: 0;
+	               right: 0;
+	               bottom: 0;
+	               background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="200" cy="200" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="400" cy="400" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="600" cy="200" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="800" cy="600" r="3" fill="rgba(255,255,255,0.1)"/></svg>');
+	               animation: twinkle 3s ease-in-out infinite;
+	           }
+
+	           .cta-content {
+	               position: relative;
+	               z-index: 2;
+	           }
+
+	           .cta-title {
+	               font-size: 3rem;
+	               font-weight: 800;
+	               margin-bottom: 1rem;
+	           }
+
+	           .cta-text {
+	               font-size: 1.3rem;
+	               margin-bottom: 3rem;
+	               opacity: 0.9;
+	               max-width: 600px;
+	               margin-left: auto;
+	               margin-right: auto;
+	           }
+			   /* Animations */
+			         @keyframes slideInUp {
+			             from {
+			                 opacity: 0;
+			                 transform: translateY(50px);
+			             }
+			             to {
+			                 opacity: 1;
+			                 transform: translateY(0);
+			             }
+			         }
+
+			         @keyframes float {
+			             0%, 100% { transform: translateY(0px); }
+			             50% { transform: translateY(-20px); }
+			         }
+
+			         @keyframes floatBook {
+			             0% {
+			                 transform: translateY(100vh) rotate(0deg);
+			                 opacity: 0;
+			             }
+			             10% {
+			                 opacity: 1;
+			             }
+			             90% {
+			                 opacity: 1;
+			             }
+			             100% {
+			                 transform: translateY(-100px) rotate(360deg);
+			                 opacity: 0;
+			             }
+			         }
+
+			         @keyframes twinkle {
+			             0%, 100% { opacity: 0.5; }
+			             50% { opacity: 1; }
+			         }
+
+			         /* Responsive Design */
+			         @media (max-width: 768px) {
+			             .hero-title {
+			                 font-size: 2.5rem;
+			             }
+			             
+			             .hero-subtitle {
+			                 font-size: 1.2rem;
+			             }
+			             
+			             .section-title {
+			                 font-size: 2rem;
+			             }
+			             
+			             .stats-container {
+			                 margin: 0 1rem;
+			                 padding: 2rem 1rem;
+			             }
+			             
+			             .stat-number {
+			                 font-size: 2rem;
+			             }
+			         }
+
+			         /* Scroll Animations */
+			         .fade-in {
+			             opacity: 0;
+			             transform: translateY(30px);
+			             transition: all 0.6s ease;
+			         }
+
+			         .fade-in.visible {
+			             opacity: 1;
+			             transform: translateY(0);
+			         }
+	 

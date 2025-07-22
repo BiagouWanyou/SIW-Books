@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiwBooks - Dettaglio Libro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/homeStyle.css}" />
+	<link rel="stylesheet" th:href="@{/css/dettagli.css}" />
+	<link rel="stylesheet" th:href="@{/css/navbar.css}" />
+	<link rel="stylesheet" th:href="@{/css/footer.css}" />
+   
+</head>
+<body>
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="floating-books">
+			       <i class="fas fa-book floating-book" style="left: 10%; animation-delay: 0s;"></i>
+			       <i class="fas fa-book-open floating-book" style="left: 20%; animation-delay: 3s;"></i>
+			       <i class="fas fa-bookmark floating-book" style="left: 30%; animation-delay: 6s;"></i>
+			       <i class="fas fa-feather-alt floating-book" style="left: 40%; animation-delay: 9s;"></i>
+			       <i class="fas fa-scroll floating-book" style="left: 50%; animation-delay: 12s;"></i>
+			       <i class="fas fa-book floating-book" style="left: 60%; animation-delay: 2s;"></i>
+			       <i class="fas fa-book-open floating-book" style="left: 70%; animation-delay: 5s;"></i>
+			       <i class="fas fa-bookmark floating-book" style="left: 80%; animation-delay: 8s;"></i>
+			       <i class="fas fa-feather-alt floating-book" style="left: 90%; animation-delay: 11s;"></i>
+			   </div>
+    <section class="hero-section">
+		
+        <div class="container">
+            <div class="detail-hero-content">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 text-center mb-4 mb-lg-0">
+                        <th:block th:if="${libro.copertina!=null}">
+                            <img th:src="@{'/image/' + ${libro.copertina.id}}"
+                                 alt="Copertina Libro" 
+                                 class="book-image-main"
+                                 data-bs-toggle="modal" 
+                                 data-bs-target="#galleryModal">
+						</th:block>
+                    </div>
+                    <div class="col-lg-7">
+                        <h1 class="book-title" th:text="${libro.titolo}">Il Mistero della Biblioteca Perduta</h1>
+                        
+                        <div class="book-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar-alt me-2 " ></i>
+								<span th:text="${libro.dataPubblicazione.getYear}"></span>
+                            </div>
+							<th:block th:each="genere:${libro.generi}">
+							    <div class="meta-item">
+							        <i class="fas fa-tag me-2" ></i>
+									<span th:text="' ' + ${genere.name}"></span>
+							    </div>
+							</th:block>
+                            
+                            <div class="meta-item rating-display">
+								<span class="rating-stars">
+								      <i th:each="i : ${#numbers.sequence(1, 5)}"
+								          th:class="${i <= libro.mediaVoti ? 'fas fa-star' : 'far fa-star'}"></i>
+								</span>
+                                <span th:text="${libro.mediaVoti}">4.5 (127 recensioni)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-3 flex-wrap">
+							
+                            
+                            <a href="#" class="btn-outline-custom" data-bs-toggle="modal" data-bs-target="#galleryModal">
+                                <i class="fas fa-images"></i>Galleria
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="section-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-book-reader me-2"></i>Sinossi
+                        </h2>
+                        <p th:text="${libro.sinossi}">
+							Nessuna sinossi disponibile.
+                        </p>
+                    </div>
+
+					
+					<div class="section-card">
+					    <div class="section-header-detail">
+					        <h2 class="section-title" >
+					            <i class="fas fa-star me-2"></i>Recensioni
+					        </h2>
+					        <!-- Add your button here -->
+					        <a th:href="@{/recensioni/{idL}(idL=${libro.id})} "class="btn-custom">
+					            <i class="fas fa-plus me-2"></i>Scoprile Tutte!
+					        </a>
+					    </div>
+					    
+					    <div class="detail-list-card" th:each="review:${reviews}">
+					        <div class="review-header">
+					            <div>
+					                <b th:text="${review.titolo}"></b>
+					                <span class="rating-stars">
+					                    <i th:each="i : ${#numbers.sequence(1, 5)}"
+					                        th:class="${i <= review.voto ? 'fas fa-star' : 'far fa-star'}"></i>
+					                </span>
+					            </div>
+					            
+					            <div class="reviewer-name">
+					                <i class="fas fa-user-circle me-2"></i><span th:text="${review.user.name}"></span>
+									<a class="btn btn-danger btn-danger-custom" th:if="${userDetails!=null and(review.user.credentials.username == userDetails.username or #authorization.expression('hasRole(''ADMIN'')'))}" 
+									   th:href="@{/libri/{idL}/elimina-recensione/{idR}(idL=${libro.id}, idR=${review.id})}">Delete</a>					            </div>
+					        </div>
+					        <div class="review-text" th:text="${review.testo}">
+					            Nessun testo disponibile.
+					        </div>
+					    </div>
+					    
+					    <div class="add-review-form" th:if="${userDetails!=null}">
+					        <h4 class="mb-3">
+					            <i class="fas fa-edit me-2"></i>Aggiungi la tua recensione
+					        </h4>
+					        <form th:action="@{/libri/{idL}/post-review(idL=${libro.id})}" method="post" th:object="${userReview}">
+					            <div class="row mb-3">
+					                <div class="col-md-6">
+					                    <input type="text" class="form-control" placeholder="Titolo" th:field="*{titolo}" required>
+					                </div>
+					                <div class="col-md-6">
+					                    <select class="form-control" th:field="*{voto}"required>
+					                        <option value="">Seleziona voto</option>
+					                        <option value="5">⭐⭐⭐⭐⭐ (5 stelle)</option>
+					                        <option value="4">⭐⭐⭐⭐☆ (4 stelle)</option>
+					                        <option value="3">⭐⭐⭐☆☆ (3 stelle)</option>
+					                        <option value="2">⭐⭐☆☆☆ (2 stelle)</option>
+					                        <option value="1">⭐☆☆☆☆ (1 stella)</option>
+					                    </select>
+					                </div>
+					            </div>
+					            <div class="mb-3">
+					                <textarea class="form-control" rows="4" placeholder="Scrivi la tua recensione..." th:field="*{testo}" required></textarea>
+					            </div>
+					            <button type="submit" class="btn-custom">
+					                <i class="fas fa-paper-plane me-2"></i>Invia Recensione
+					            </button>
+					        </form>
+					    </div>
+					</div>
+                </div>
+                
+                <div class="col-lg-4">
+					<div class="section-card" sec:authorize="hasRole('ADMIN')">
+					                        <h2 class="section-title">
+					                            <i class="fas fa-cog me-2"></i>Azioni Admin
+					                        </h2>
+											<div class="d-grid gap-2">
+													 <a th:href="@{/admin/modifica-libro/{idL}(idL=${libro.id})}" class="btn btn-warning">
+														<i class="fas fa-edit me-2"></i>Modifica Libro
+													</a>
+													<a th:href="@{/admin/elimina-libro/{idL}(idL=${libro.id})}" class="btn btn-danger" 
+															onclick="return confirm('Sei sicuro di voler eliminare questo libro?')">
+														<i class="fas fa-trash me-2"></i>Elimina Libro
+													 </a>
+											</div>
+					                    </div>
+					
+					
+					
+                    <div class="section-card">
+
+					    <div class="d-flex justify-content-between align-items-center mb-3">
+					        <h2 class="section-title mb-0">
+					            <i class="fas fa-users me-2"></i>Autori
+					        </h2>
+					        
+					    </div>
+					    
+						<th:block th:each="autore : ${libro.autori}">
+						    <a th:href="@{/autori/{idA}(idA=${autore.id})}" class="detail-list-card">
+						        <div class="author-name" th:text="${(autore.nome ?: '') + ' ' + (autore.cognome ?: '')}">Marco Rossi</div>
+						        <div class="author-info">
+						            <i class="fas fa-globe me-2"></i> <span th:text="' '+${autore.nazionalita?.nome ?: 'Nazionalità non disponibile'}"></span>
+						            <i class="fas fa-calendar me-2"></i><span th:text="' '+${autore.dataNascita?.getYear() ?: 'Data non disponibile'}"></span>
+						            <i class="fas fa-book me-2"></i><span th:text="' '+${(autore.libri?.size() ?: 0) + ' libri pubblicati'}"></span>
+						        </div>
+						    </a>
+						</th:block>
+					    
+					    <div th:if="${libro.autori.isEmpty()}">
+					        <p class="text-muted">Nessun autore disponibile per questo libro.</p>
+					    </div>
+					</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="galleryModalLabel">
+                        <i class="fas fa-images me-2"></i>Galleria Immagini
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+				<form th:id="uploadImageForm" th:action="@{/admin/upload/libro/{idL}(idL=${libro.id})}" method="post" enctype="multipart/form-data">
+				   <div class="modal-body">
+				       <div class="gallery-grid">
+						<th:block sec:authorize="hasRole('ADMIN')">
+								<div class="gallery-item">
+										<label for="imageUploadInput" class="gallery-placeholder">
+												<i class="fas fa-plus"></i>
+												   	 <span class="d-none d-md-inline ms-2"></span> 
+										</label>
+									<input type="file" id="imageUploadInput" name="file" accept="image/*" style="display: none;"> 
+								</div>
+						</th:block>
+				           <th:block th:if="${libro.copertina!=null}">
+				               <div class="gallery-item">
+				                   <img th:src="@{'/image/' + ${libro.copertina.id}}" class="gallery-image" alt="Copertina Libro">
+				               </div>
+				           </th:block>
+						   
+				           <div class="gallery-item" th:each="image:${images}">
+				               <img th:src="@{'/image/' + ${image.id}}" class="gallery-image" alt="Immagine aggiuntiva">
+				           </div>
+						   
+				       </div>
+				   </div>
+				   <div class="modal-footer">
+				       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+				   </div>
+				</form>
+            </div>
+        </div>
+    </div>
+	<script th:src="@{/js/home.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageUploadInput = document.getElementById('imageUploadInput');
+            const uploadImageForm = document.getElementById('uploadImageForm');
+
+            // Ensure both elements exist before adding the event listener
+            if (imageUploadInput && uploadImageForm) {
+                imageUploadInput.addEventListener('change', function() {
+                    // Check if files are selected before submitting
+                    if (this.files && this.files.length > 0) {
+                        uploadImageForm.submit(); // Automatically submit the form
+                    }
+                });
+            }
+        });
+    </script>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

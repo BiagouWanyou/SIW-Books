@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiwBooks - Registra Libro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homeStyle.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/formStyle.css}" />
+    
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="floating-books">
+        <i class="fas fa-book floating-book" style="left: 10%; animation-delay: 0s;"></i>
+        <i class="fas fa-book-open floating-book" style="left: 20%; animation-delay: 3s;"></i>
+        <i class="fas fa-bookmark floating-book" style="left: 30%; animation-delay: 6s;"></i>
+        <i class="fas fa-feather-alt floating-book" style="left: 40%; animation-delay: 9s;"></i>
+        <i class="fas fa-scroll floating-book" style="left: 50%; animation-delay: 12s;"></i>
+        <i class="fas fa-book floating-book" style="left: 60%; animation-delay: 2s;"></i>
+        <i class="fas fa-book-open floating-book" style="left: 70%; animation-delay: 5s;"></i>
+        <i class="fas fa-bookmark floating-book" style="left: 80%; animation-delay: 8s;"></i>
+        <i class="fas fa-feather-alt floating-book" style="left: 90%; animation-delay: 11s;"></i>
+    </div>
+
+    <section class="app-form-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+                    <div class="app-card-container app-card-large">
+                        <div class="app-card-header">
+                            <h1><i class="fas fa-book input-icon"></i> Registra Libro</h1>
+                            <p>Aggiungi un nuovo libro al catalogo</p>
+                        </div>
+                        
+                        <div class="app-form-content app-form-content-expanded">
+                            <form th:action="@{/admin/registra-libro}" method="post" enctype="multipart/form-data" th:object="${book}">
+								<input type="hidden" th:field="*{id}">
+								<input type="hidden" th:field="*{images}">
+								<input type="hidden" th:field="*{mediaVoti}">
+								<input type="hidden" th:if="${book.copertina != null}" th:field="*{copertina.id}">
+								<input type="hidden"  th:field="*{reviews}">
+                                <!-- Informazioni Base -->
+                                <div class="form-grouping form-grouping-spaced">
+                                    <h3><i class="fas fa-info-circle"></i> Informazioni Base</h3>
+                                    
+                                    <div class="form-floating">
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="titolo" 
+                                               th:field="*{titolo}"
+                                               placeholder="Titolo del libro"
+                                               >
+                                        <label for="titolo">Titolo del libro</label>
+                                        <div th:if="${#fields.hasErrors('titolo')}" class="error-message">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>
+                                            <span th:errors="*{titolo}"></span>
+                                        </div>
+                                    </div>
+
+									<div class="form-floating">
+									    <input type="date"
+									           class="form-control"
+									           id="dataPubblicazione"
+									           th:field="*{dataPubblicazione}"
+									           placeholder="Data di pubblicazione"
+									           
+									           th:value="${book.dataPubblicazione != null ? #temporals.format(book.dataPubblicazione, 'yyyy-MM-dd') : ''}">
+									           <label for="dataPubblicazione">Data di Pubblicazione</label>
+									    <div th:if="${#fields.hasErrors('dataPubblicazione')}" class="error-message">
+									        <i class="fas fa-exclamation-triangle me-2"></i>
+									        <span th:errors="*{dataPubblicazione}"></span>
+									    </div>
+									</div>
+
+                                    <div class="form-floating">
+                                        <textarea class="form-control sinossi-expanded" 
+                                                  id="sinossi" 
+                                                  th:field="*{sinossi}"
+                                                  placeholder="Sinossi del libro"
+                                                  maxlength="1000"
+                                                  style="min-height: 120px; resize: vertical;"
+                                                  ></textarea>
+                                        <label for="sinossi">Sinossi</label>
+                                        <div th:if="${#fields.hasErrors('sinossi')}" class="error-message">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>
+                                            <span th:errors="*{sinossi}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Generi -->
+                                <div class="form-grouping form-grouping-spaced">
+                                    <h3><i class="fas fa-tags"></i> Generi</h3>
+                                    
+									<div class="mb-3">
+									   
+									    
+									    <div class="dropdown">
+									        <button class="btn btn-secondary dropdown-toggle custom-dropdown" type="button" id="multiSelectDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+									            Scegli i generi
+									        </button>
+											<ul class="dropdown-menu" aria-labelledby="multiSelectDropdown">
+											    <li th:each="genre : ${AllGenres}">
+											        <label class="dropdown-item custom-dropdown-item">
+											            <input type="checkbox" 
+											                   th:value="${genre.id}" 
+											                   th:field="*{generi}">
+											            <span class="custom-checkmark"><i class="fas fa-check"></i></span>
+											            <span class="genre-text" th:text="${genre.name}">Genere</span>
+											        </label>
+											    </li>
+											</ul>
+									    </div>
+									    
+									    <div th:if="${#fields.hasErrors('generi')}" class="error-message">
+									        <i class="fas fa-exclamation-triangle me-2"></i>
+									        <span th:errors="*{generi}"></span>
+									    </div>
+									</div>
+                                </div>
+								<div class="form-grouping form-grouping-spaced">
+									<h3><i class="fas fa-user-edit input-icon"></i>  Autori</h3>
+									<div class="mb-3">
+																		   
+																		    
+																		    <div class="dropdown">
+																		        <button class="btn btn-secondary dropdown-toggle custom-dropdown" type="button" id="AutoriMultiSelectDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+																		            Scegli i gli autori
+																		        </button>
+																				<ul class="dropdown-menu" aria-labelledby="AutoriMultiSelectDropdown">
+																				    <li th:each="autore : ${autori}">
+																				        <label class="dropdown-item custom-dropdown-item">
+																				            <input type="checkbox" 
+																				                   th:value="${autore.id}" 
+																				                   th:field="*{autori}">
+																				            <span class="custom-checkmark"><i class="fas fa-check"></i></span>
+																				            <span class="genre-text" th:text="${autore.nome}+''+${autore.cognome}">Autore</span>
+																				        </label>
+																				    </li>
+																				</ul>
+																		    </div>
+																		    
+																		    <div th:if="${#fields.hasErrors('autori')}" class="error-message">
+																		        <i class="fas fa-exclamation-triangle me-2"></i>
+																		        <span th:errors="*{autori}"></span>
+																		    </div>
+																		</div>
+								</div>
+                                <!-- Immagine -->
+                                <div class="form-grouping form-grouping-spaced">
+                                    <h3><i class="fas fa-image"></i> Immagine di Copertina</h3>
+                                    
+                                    <div class="mb-3">
+                                        <label for="file" class="form-label">
+                                            <i class="fas fa-upload me-2"></i>
+                                            <span id="file-label">Seleziona un'immagine di copertina</span>
+                                        </label>
+                                        <input type="file" 
+                                               class="form-control" 
+                                               id="file" 
+                                               name="file"
+                                               accept="image/*">
+                                        <small class="text-muted">Formati supportati: JPG, PNG, GIF (max 5MB)</small>
+                                    </div>
+                                </div>
+
+                                <!-- Pulsanti -->
+                                <div class="row form-row form-row-expanded">
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-primary-gradient">
+                                            <i class="fas fa-save me-2"></i>Salva Libro
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="/" class="btn btn-outline-primary-gradient">
+                                            <i class="fas fa-arrow-left me-2"></i>Annulla
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+	<script th:src="@{/js/form.js}"></script>
+
+</body>
+</html>

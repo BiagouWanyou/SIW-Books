@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiwBooks - Esplora Libri</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homeStyle.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+	<link rel="stylesheet" th:href="@{/css/catalogoStyle.css}" />
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="floating-books">
+        <i class="fas fa-book floating-book" style="left: 10%; animation-delay: 0s;"></i>
+        <i class="fas fa-book-open floating-book" style="left: 20%; animation-delay: 3s;"></i>
+        <i class="fas fa-bookmark floating-book" style="left: 30%; animation-delay: 6s;"></i>
+        <i class="fas fa-feather-alt floating-book" style="left: 40%; animation-delay: 9s;"></i>
+        <i class="fas fa-scroll floating-book" style="left: 50%; animation-delay: 12s;"></i>
+        <i class="fas fa-book floating-book" style="left: 60%; animation-delay: 2s;"></i>
+        <i class="fas fa-book-open floating-book" style="left: 70%; animation-delay: 5s;"></i>
+        <i class="fas fa-bookmark floating-book" style="left: 80%; animation-delay: 8s;"></i>
+        <i class="fas fa-feather-alt floating-book" style="left: 90%; animation-delay: 11s;"></i>
+    </div>
+
+    <section class="items-section">
+        <div class="container content-container">
+            <div class="page-header fade-in">
+                <h1><i class="fas fa-book-reader me-3"></i>Esplora Libri</h1>
+                <p>Scopri i migliori libri della nostra collezione</p>
+            </div>
+            
+            <div class="search-filters fade-in">
+                <form th:action="@{/libri}" method="get" id="searchForm">
+                    <div class="search-bar">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" name="search" 
+                               th:value="${search}" placeholder="Cerca libro per titolo o autore..."
+                               id="searchInput">
+                    </div>
+                    
+                    <div class="filters-row">
+                        <div class="filter-group">
+                            <label class="filter-label">Valutazione minima:</label>
+                            <select name="minRating" class="filter-select">
+                                <option value="">Tutte</option>
+                                <option value="1" th:selected="${minRating == 1}">⭐ 1+</option> 
+								<option value="2" th:selected="${minRating == 2}">⭐ 2+</option>
+                                <option value="3" th:selected="${minRating == 3}">⭐ 3+</option>
+                                <option value="4" th:selected="${minRating == 4}">⭐ 4+</option>
+                                <option value="5" th:selected="${minRating == 5}">⭐ 5</option>
+                            </select>
+                        </div>
+						<div class="filter-group">
+						     <label class="filter-label">Genere:</label>
+						     <select name="genre" class="filter-select">
+						        <option value="">Nessuno</option>
+						        <option th:each="genere:${generi}" 
+										th:value="${genere.name}" 
+										th:text="${genere.name}"
+										th:selected="${genre != null and genre == genere.name}">Genere</option> 
+							</select>
+						</div>
+							<div class="filter-group">
+													     <label class="filter-label">Autore:</label>
+													     <select name="autore" class="filter-select">
+													        <option value="">Nessuno</option>
+													        <option th:each="author:${authors}" 
+																	th:value="${author.id}" 
+																	th:text="${author.nome}+${author.cognome}"
+																	th:selected="${author != null and author.getId() == autore}">Autore</option> 
+														</select>
+						 </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Ordina per:</label>
+							<select name="sortBy" class="filter-select">
+							    <option value="titolo" th:selected="${sortBy == 'titolo'}">Titolo</option> <option value="mediaVoti" th:selected="${sortBy == 'mediaVoti'}">Valutazione</option>  </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Ordine:</label>
+                            <select name="sortOrder" class="filter-select">
+                                <option value="asc" th:selected="${sortOrder == 'asc'}">Crescente</option> <option value="desc" th:selected="${sortOrder == 'desc'}">Decrescente</option> </select>
+                        </div>
+                        
+						
+                    </div>
+				
+					<div class="button-center-container">
+					                        <button type="submit" class="btn-filter">
+					                            <i class="fas fa-filter me-2"></i>Applica Filtri
+					                        </button>
+											</div>
+					
+                </form>
+            </form>
+            
+            <div class="results-info fade-in">
+                <div class="results-count">
+                    <i class="fas fa-book-open me-2"></i>
+                    <span th:text="${totalBooks ?: '0'}">42</span> libri trovati
+                </div>
+                <button type="button" class="clear-filters" onclick="window.location.href='/libri'"> 
+                    <i class="fas fa-times me-1"></i>Pulisci Filtri
+                </button>
+            </div>
+            
+            <div class="items-grid">
+                <div class="item-card fade-in" th:each="libro : ${libri.content}">
+                    <div class="item-photo-container">
+                        <img th:if="${libro.copertina != null }"
+                             th:src="@{'/image/' + ${libro.copertina.id}}"
+                             th:alt="${libro.titolo}"
+                             class="item-photo">
+                        <div th:unless="${libro.copertina!=null }"
+                             class="item-photo-placeholder">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
+                    
+                    <h4 class="item-name" th:text="${libro.titolo}">Titolo Libro</h4>
+                 <div class="book-rating" th:if="${libro.mediaVoti != null}">
+                        <span class="rating-stars">
+                            <i th:each="i : ${#numbers.sequence(1, 5)}"
+                               th:class="${i <= libro.mediaVoti ? 'fas fa-star' : 'far fa-star'}"></i>
+                        </span>
+                        <span class="rating-text" th:text="${#numbers.formatDecimal(libro.mediaVoti, 1, 1)}">4.5</span>
+                    </div>
+                    <div class="book-rating" th:unless="${libro.mediaVoti != null}">
+                        <span class="rating-stars">
+                            <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                        </span>
+                        <span class="rating-text">N/D</span>
+                    </div>
+				
+					        <div class="book-year year-catalog" th:text="'Anno Pubblicazione: '+${libro.dataPubblicazione.year}">2024</div>
+					                                
+					                           
+                    
+                    <a th:href="@{'/libri/' + ${libro.id}}" class="btn-item btn-item-primary">
+                        <i class="fas fa-info-circle me-2 button-text"></i>Dettagli
+                    </a>
+                </div>
+				
+            </div>
+            
+			<div class="pagination-container fade-in" th:if="${totalPages > 1}">
+			    <nav aria-label="Paginazione libri">
+			        <ul class="pagination">
+			            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+			                <a class="page-link" th:href="@{/libri(page=${currentPage - 1}, search=${search}, minRating=${minRating}, genre=${genre}, sortBy=${sortBy}, sortOrder=${sortOrder})}">
+			                    <i class="fas fa-chevron-left"></i>
+			                </a>
+			            </li>
+
+			            <li class="page-item" th:if="${currentPage >= 2}">
+			                <a class="page-link" th:href="@{/libri(page=0, search=${search}, minRating=${minRating}, genre=${genre}, sortBy=${sortBy}, sortOrder=${sortOrder})}">1</a>
+			            </li>
+			            <li class="page-item disabled" th:if="${currentPage >= 3}">
+			                <a class="page-link" href="#">...</a>
+			            </li>
+
+			            <li class="page-item"
+			                th:each="pageNumber : ${#numbers.sequence(T(java.lang.Math).max(0, currentPage - 1), T(java.lang.Math).min(totalPages - 1, currentPage + 1))}"
+			                th:classappend="${pageNumber == currentPage} ? 'active'">
+			                <a class="page-link"
+			                   th:href="@{/libri(page=${pageNumber}, search=${search}, minRating=${minRating}, genre=${genre}, sortBy=${sortBy}, sortOrder=${sortOrder})}"
+			                   th:text="${pageNumber + 1}">1</a>
+			            </li>
+
+			            <li class="page-item disabled" th:if="${T(java.lang.Math).min(totalPages - 1, currentPage + 1) < totalPages - 2}">
+			                <a class="page-link" href="#">...</a>
+			            </li>
+			            
+			            <li class="page-item" th:if="${T(java.lang.Math).min(totalPages - 1, currentPage + 1) < totalPages - 1}">
+			                <a class="page-link" th:href="@{/libri(page=${totalPages - 1}, search=${search}, minRating=${minRating}, genre=${genre}, sortBy=${sortBy}, sortOrder=${sortOrder})}" th:text="${totalPages}"></a>
+			            </li>
+
+			            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+			                <a class="page-link" th:href="@{/libri(page=${currentPage + 1}, search=${search}, minRating=${minRating}, genre=${genre}, sortBy=${sortBy}, sortOrder=${sortOrder})}">
+			                    <i class="fas fa-chevron-right"></i>
+			                </a>
+			            </li>
+			        </ul>
+			    </nav>
+			</div>
+        </div>
+    </section>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+	<script th:src="@{/js/home.js}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

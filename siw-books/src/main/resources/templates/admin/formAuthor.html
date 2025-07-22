@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiwBooks - Registra Autore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homeStyle.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/formStyle.css}" />
+    <style>
+        /* Additional classes for larger card */
+        
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="floating-books">
+        <i class="fas fa-book floating-book" style="left: 10%; animation-delay: 0s;"></i>
+        <i class="fas fa-book-open floating-book" style="left: 20%; animation-delay: 3s;"></i>
+        <i class="fas fa-bookmark floating-book" style="left: 30%; animation-delay: 6s;"></i>
+        <i class="fas fa-feather-alt floating-book" style="left: 40%; animation-delay: 9s;"></i>
+        <i class="fas fa-scroll floating-book" style="left: 50%; animation-delay: 12s;"></i>
+        <i class="fas fa-book floating-book" style="left: 60%; animation-delay: 2s;"></i>
+        <i class="fas fa-book-open floating-book" style="left: 70%; animation-delay: 5s;"></i>
+        <i class="fas fa-bookmark floating-book" style="left: 80%; animation-delay: 8s;"></i>
+        <i class="fas fa-feather-alt floating-book" style="left: 90%; animation-delay: 11s;"></i>
+    </div>
+
+    <section class="app-form-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+                    <div class="app-card-container app-card-large">
+                        <div class="app-card-header">
+                            <h1><i class="fas fa-user-edit input-icon"></i> Registra Autore</h1>
+                            <p>Aggiungi un nuovo autore al catalogo</p>
+                        </div>
+                        
+                        <div class="app-form-content app-form-content-expanded">
+                            <form th:action="@{/admin/registra-autore}" method="post" enctype="multipart/form-data" th:object="${author}">
+								<input type="hidden" th:field="*{id}">
+                                <!-- Informazioni Personali -->
+                                <div class="form-grouping form-grouping-spaced">
+                                    <h3><i class="fas fa-user"></i> Informazioni Personali</h3>
+                                    
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" 
+                                                       class="form-control" 
+                                                       id="nome" 
+                                                       th:field="*{nome}"
+                                                       placeholder="Nome dell'autore"
+                                                       >
+                                                <label for="nome">Nome</label>
+                                                <div th:if="${#fields.hasErrors('nome')}" class="error-message">
+                                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                                    <span th:errors="*{nome}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" 
+                                                       class="form-control" 
+                                                       id="cognome" 
+                                                       th:field="*{cognome}"
+                                                       placeholder="Cognome dell'autore"
+                                                       >
+                                                <label for="cognome">Cognome</label>
+                                                <div th:if="${#fields.hasErrors('cognome')}" class="error-message">
+                                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                                    <span th:errors="*{cognome}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Date di Nascita e Morte -->
+                                <div class="form-grouping form-grouping-spaced">
+                                    <h3><i class="fas fa-calendar-alt"></i> Date Biografiche</h3>
+                                    
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="date" 
+                                                       class="form-control" 
+                                                       id="dataNascita" 
+                                                       th:field="*{dataNascita}"
+                                                       placeholder="Data di nascita"
+                                                       >
+                                                <label for="dataNascita">Data di Nascita</label>
+                                                <div th:if="${#fields.hasErrors('dataNascita')}" class="error-message">
+                                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                                    <span th:errors="*{dataNascita}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="date" 
+                                                       class="form-control" 
+                                                       id="dataMorte" 
+                                                       th:field="*{dataMorte}"
+                                                       placeholder="Data di morte (opzionale)">
+                                                <label for="dataMorte">Data di Morte (opzionale)</label>
+                                                <div th:if="${#fields.hasErrors('dataMorte')}" class="error-message">
+                                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                                    <span th:errors="*{dataMorte}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Nazionalità -->
+								<div class="form-grouping form-grouping-spaced">
+								    <h3><i class="fas fa-globe"></i> Nazionalità</h3>
+								    
+								    <div class="mb-3">
+								        <label for="nazionalita" class="form-label">Seleziona la nazionalità:</label>
+								        
+								        <div class="dropdown">
+								            <button class="btn btn-secondary dropdown-toggle custom-dropdown" type="button" id="nazionalitaSelectDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+								                Scegli la nazionalità
+								            </button>
+								            <ul class="dropdown-menu" aria-labelledby="nazionalitaSelectDropdown">
+								                <li th:each="nationality : ${AllNationalities}">
+								                    <label class="dropdown-item custom-dropdown-item">
+								                        <input type="checkbox" 
+								                               th:value="${nationality.id}" 
+								                               th:field="*{nazionalita}">
+								                        <span class="custom-checkmark"><i class="fas fa-check"></i></span>
+								                        <span class="nationality-text" th:text="${nationality.nome}">Nazionalità</span>
+								                    </label>
+								                </li>
+								            </ul>
+								        </div>
+								        
+								        <div th:if="${#fields.hasErrors('nazionalita')}" class="error-message">
+								            <i class="fas fa-exclamation-triangle me-2"></i>
+								            <span th:errors="*{nazionalita}"></span>
+								        </div>
+								    </div>
+								</div>
+
+                                <!-- Immagine -->
+                                <div class="form-grouping form-grouping-spaced">
+                                    <h3><i class="fas fa-image"></i> Foto Autore</h3>
+                                    
+                                    <div class="mb-3">
+                                        <label for="file" class="form-label">
+                                            <i class="fas fa-upload me-2"></i>
+                                            <span id="file-label">Seleziona una foto dell'autore</span>
+                                        </label>
+                                        <input type="file" 
+                                               class="form-control" 
+                                               id="file" 
+                                               name="file"
+                                               accept="image/*">
+                                        <small class="text-muted">Formati supportati: JPG, PNG, GIF (max 5MB)</small>
+                                    </div>
+                                </div>
+
+                                <!-- Pulsanti -->
+                                <div class="row form-row form-row-expanded">
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-primary-gradient">
+                                            <i class="fas fa-save me-2"></i>Salva Autore
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="/" class="btn btn-outline-primary-gradient">
+                                            <i class="fas fa-arrow-left me-2"></i>Annulla
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script th:src="@{/js/form.js}"></script>
+
+</body>
+</html>
