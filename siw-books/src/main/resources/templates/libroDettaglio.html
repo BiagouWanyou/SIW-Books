@@ -50,7 +50,7 @@
 							<th:block th:each="genere:${libro.generi}">
 							    <div class="meta-item">
 							        <i class="fas fa-tag me-2" ></i>
-									<span th:text="' ' + ${genere.name}"></span>
+									<a class="custom-link"th:href="@{/libri(genre=${genere.name})}" th:text="' ' + ${genere.name}"></a>
 							    </div>
 							</th:block>
                             

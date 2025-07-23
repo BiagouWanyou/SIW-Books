@@ -134,7 +134,7 @@
 								            <ul class="dropdown-menu" aria-labelledby="nazionalitaSelectDropdown">
 								                <li th:each="nationality : ${AllNationalities}">
 								                    <label class="dropdown-item custom-dropdown-item">
-								                        <input type="checkbox" 
+								                        <input type="radio" 
 								                               th:value="${nationality.id}" 
 								                               th:field="*{nazionalita}">
 								                        <span class="custom-checkmark"><i class="fas fa-check"></i></span>

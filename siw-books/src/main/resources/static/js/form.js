@@ -69,3 +69,8 @@ const sinossiTextarea = document.getElementById('sinossi');
 			           updateButtonText();
 			       });
 			   });
+			   
+			   
+			   
+			   
+			   
