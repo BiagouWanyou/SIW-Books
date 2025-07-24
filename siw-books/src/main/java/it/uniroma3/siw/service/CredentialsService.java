@@ -25,4 +25,8 @@ public class CredentialsService {
 	public Credentials getCredentials(String username) {
 		return this.credentialsRepository.findByUsername(username);
 	}
+	public boolean existsByUsername(String username) {
+		// TODO Auto-generated method stub
+		return this.credentialsRepository.existsByUsername( username);
+	}
 }

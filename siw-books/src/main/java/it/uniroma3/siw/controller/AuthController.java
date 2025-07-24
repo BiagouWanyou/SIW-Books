@@ -15,6 +15,7 @@ import it.uniroma3.siw.service.BookService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.ReviewService;
 import it.uniroma3.siw.service.UserService;
+import it.uniroma3.siw.validator.CredentialsValidator;
 import jakarta.validation.Valid;
 
 
@@ -32,6 +33,8 @@ public class AuthController {
 	private BookService bookService;
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private CredentialsValidator credentialsValidator;
 
 	@GetMapping("/login")
 	public String login() {
@@ -52,10 +55,10 @@ public class AuthController {
 			@ModelAttribute("credentials") Credentials credentials,
 			BindingResult credentialsBindingResult,
 			Model model) {
-		
+		this.credentialsValidator.validate(credentials, credentialsBindingResult);
 		// se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
 		if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
-			
+			System.err.println("DEBUG: username gia salvato");
 			userService.saveUser(user);
 			credentials.setUser(user);
 			credentialsService.saveCredentials(credentials);
@@ -63,7 +66,7 @@ public class AuthController {
 			return "redirect:/login";
 		}
 	 
-		return "register";
+		return "register.html";
 	}
 	@GetMapping("/")
 	public String getHomePage(Model model) {
