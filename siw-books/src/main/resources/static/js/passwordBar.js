@@ -13,17 +13,4 @@
             strengthBar.style.width = strength + '%';
         });
         
-        // Form validation
-        // Note: The 'confermaPassword' input was commented out in your HTML.
-        // If you re-introduce it, uncomment this JavaScript block as well.
-        /*
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const password = document.getElementById('credentials.password').value;
-            const confermaPassword = document.getElementById('confermaPassword').value;
-            
-            if (password !== confermaPassword) {
-                e.preventDefault();
-                alert('Le password non coincidono!');
-            }
-        });
-      */
+        
